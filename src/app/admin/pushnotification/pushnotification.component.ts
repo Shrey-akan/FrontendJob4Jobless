@@ -35,7 +35,7 @@ export class PushnotificationComponent implements OnInit {
     this.selectedTokens.pop(); // Remove the last item from the array
   }
   fetchTokens(): void {
-    this.http.get<any>('https://rocknwoods.website:4000/api/gettoken')
+    this.http.get<any>('https://foodsrecipes.site:3000/api/gettoken')
       .subscribe(
         {
           next: (response) => {
@@ -69,7 +69,7 @@ export class PushnotificationComponent implements OnInit {
       };
  
       console.log("Form data is: ", formData)
-      this.http.post<any>('https://rocknwoods.website:4000/api/sendmsg', formData)
+      this.http.post<any>('https://foodsrecipes.site:3000/api/sendmsg', formData)
         .subscribe({
           next: response => {
             console.log("Response is: ", response)

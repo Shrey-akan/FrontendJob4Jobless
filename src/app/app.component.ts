@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
 
 
   sendTokenToAPI(token: string) {
-    const apiUrl = 'https://rocknwoods.website:4000/api/settoken';
+    const apiUrl = 'https://foodsrecipes.site:3000/api/settoken';
     const tokenid = generateRandomTokenId();
     this.http.post(apiUrl, { token, tokenid }).subscribe({
       next: (response: any) => {

@@ -104,7 +104,7 @@ export class MessageComponent implements OnInit, OnDestroy {
       return;
     }
   
-    this.socket = io('https://rocknwoods.website:4400', {
+    this.socket = io('https://foodsrecipes.site:3000', {
       query: {
         id: this.cookie.get('uid'), // Send the user's ID as 'id' query parameter
         targetId: userId

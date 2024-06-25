@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ApplyJob } from 'src/app/apply-job';
@@ -13,7 +14,7 @@ export class NotificationComponent implements OnInit {
 
   showFloatingGif = false;
   userData1!: any;
-  abc:any;
+  abc: any;
   user: any;
   showDetails = false;
   jobTitleFilter: string = '';
@@ -36,7 +37,7 @@ export class NotificationComponent implements OnInit {
   }
 
   expandedUser: any | null = null;
-  constructor(public cookie:CookieService , private b1:UserService , private router:Router,private elRef: ElementRef, private renderer: Renderer2) {}
+  constructor(public cookie: CookieService, private snackBar: MatSnackBar, private b1: UserService, private router: Router, private elRef: ElementRef, private renderer: Renderer2) { }
   userID: string = "0";
 
   ngOnInit(): void {
@@ -44,7 +45,7 @@ export class NotificationComponent implements OnInit {
     // let response = this.b1.fetchuser();
     let response = this.b1.fetchuser(this.userID);
     response.subscribe((data1: any) => {
-      const uuid=this.userID;
+      const uuid = this.userID;
       // this.userData1 = data1.find((user: any) => user.uid == uuid);
       this.userData1 = data1.users;
       this.abc = this.userData1.userName;
@@ -80,7 +81,7 @@ export class NotificationComponent implements OnInit {
     });
   }
 
-  navigateTo(){
+  navigateTo() {
     this.router.navigate(['/dashboarduser']);
   }
 
@@ -88,23 +89,23 @@ export class NotificationComponent implements OnInit {
     if (!date) {
       return 'No date available';
     }
-  
+
     const parsedDate = date instanceof Date ? date : new Date(date);
-  
+
     if (isNaN(parsedDate.getTime())) {
       return 'Invalid date';
     }
-  
+
     const now = new Date();
     const timeDifference = now.getTime() - parsedDate.getTime();
-    
+
     const seconds = Math.floor(timeDifference / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
     const months = Math.floor(days / 30);
     const years = Math.floor(days / 365);
-  
+
     if (years > 0) {
       return years === 1 ? 'a year ago' : `${years} years ago`;
     } else if (months > 0) {
@@ -120,43 +121,63 @@ export class NotificationComponent implements OnInit {
     }
   }
   onDeleteButtonClick(uid: string, juid: string): void {
+    console.log("testing", uid);
+    console.log("testing", juid);
     this.b1.deleteUserStatus(uid, juid).subscribe(
-      (isDeleted: boolean) => {
-        if (isDeleted) {
-          console.log('UserStatus deleted successfully.');
-        } else {
-          console.log('UserStatus not found or deletion failed.');
+      {
+        next: (isDeleted: boolean) => {
+          if (isDeleted) {
+            const snackBarRef = this.snackBar.open('Deleted Successfully.', 'Close', {
+              duration: 10000, 
+              horizontalPosition: 'center',
+              verticalPosition: 'top'
+            });
+    
+            snackBarRef.onAction().subscribe(() => {
+              this.router.navigate(['/dashboarduser']); 
+            });
+          } else {
+            console.log('UserStatus not found or deletion failed.');
+          }
+        },
+        error: (error: any) => {
+          console.error('Error deleting UserStatus:', error);
         }
-      },
-      (error: any) => {
-        console.error('Error deleting UserStatus:', error);
       }
     );
   }
 
   onSendMessageButtonClick(uid: string, juid: string): void {
     this.b1.updateViewCheck(uid, juid).subscribe(
-        {
-            next: (response: string | boolean) => {
-                if (typeof response === 'boolean') {
-                    if (response) {
-                        console.log('ViewCheck updated successfully.');
-                     
-                    } else {
-                        console.log('UserStatus not found or an error occurred.');
-                        // Handle failure as needed.
-                    }
-                } else {
-                    console.error('Unexpected response:', response);
-                    // Handle unexpected response if needed.
-                }
-            },
-            error: (error: any) => {
-                console.error('Error updating ViewCheck:', error);
-                // Handle the error as needed.
+      {
+        next: (response: string | boolean) => {
+          if (typeof response === 'boolean') {
+            if (response) {
+              const snackBarRef = this.snackBar.open('Checked Successfully.', 'Close', {
+                duration: 10000, 
+                horizontalPosition: 'center',
+                verticalPosition: 'top'
+              });
+      
+              snackBarRef.onAction().subscribe(() => {
+                this.router.navigate(['/dashboarduser']); 
+              });
+
+            } else {
+              console.log('UserStatus not found or an error occurred.');
+              // Handle failure as needed.
             }
+          } else {
+            console.error('Unexpected response:', response);
+            // Handle unexpected response if needed.
+          }
+        },
+        error: (error: any) => {
+          console.error('Error updating ViewCheck:', error);
+          // Handle the error as needed.
         }
+      }
     );
-}
+  }
 
 }

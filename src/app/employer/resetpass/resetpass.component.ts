@@ -82,7 +82,7 @@ export class ResetpassComponent  implements OnInit{
       },
       error: (err: any) => {
         console.error(`Some error occurred: ${err}`);
-        this.snackBar.open(err, 'Close', {
+        this.snackBar.open('Some Error Occurred', 'Close', {
           duration: 10000, // Duration in milliseconds
           horizontalPosition: 'center',
           verticalPosition: 'top'

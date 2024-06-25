@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="row" *ngIf="!isLoading">
-    <ng-container *ngIf="data.length > 0; else noJobsContent">
+    <ng-container *ngIf="data.length > 0;">
       <div class="col">
         <div class="row justify-content-center">
           <div class="col-auto d-flex align-items-center">
@@ -79,18 +79,6 @@
   </div>
 </div>
 
-<ng-template #noJobsContent>
-  <div class="container text-center">
-    <img src="https://raw.githubusercontent.com/suraj9594/Feature-Images/main/images/no%20jobs%20posted%20yet-01.png"
-      alt="No Jobs" class="no-jobs-image">
-    <!-- <p class="no-jobs-text">No jobs posted yet.</p> -->
-    <h1 class="no-jobs-text">There is no job </h1>
-    <div class="d-flex justify-content-center align-items-center">
-      <button class="btn custom-btn rounded-pill post-job-button" (click)="redirectToDashboardEmp()">Post a Job</button>
-    </div>
-  </div>.
-</ng-template>
-
 
 <!-- Modal for displaying applied users -->
 <div class="modal" tabindex="-1" role="dialog">
@@ -108,3 +96,15 @@
     </div>
   </div>
 </div>
+
+<ng-template #noJobsContent>
+  <div class="container text-center">
+    <img src="https://raw.githubusercontent.com/suraj9594/Feature-Images/main/images/no%20jobs%20posted%20yet-01.png"
+      alt="No Jobs" class="no-jobs-image">
+    <!-- <p class="no-jobs-text">No jobs posted yet.</p> -->
+    <h1 class="no-jobs-text">There is no job </h1>
+    <div class="d-flex justify-content-center align-items-center">
+      <button class="btn custom-btn rounded-pill post-job-button" (click)="redirectToDashboardEmp()">Post a Job</button>
+    </div>
+  </div>.
+</ng-template>

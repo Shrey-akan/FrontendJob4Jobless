@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="jobPosts.length > 9 && !showAll">
+  <!-- <ng-container *ngIf="jobPosts.length > 9 && !showAll">
     <button (click)="toggleShowMore()" class="btn custom-btn rounded-pill mt-3">
       Show More
     </button>
@@ -90,25 +90,8 @@
     <button (click)="toggleShowMore()" class="btn btn-primary rounded-pill mt-3">
       Show Less
     </button>
-  </ng-container>
+  </ng-container> -->
 </div>
-
-<!-- <div class="container mt-4 custom-font">
-  <h1 class="text-center" style="font-size: 1.5rem; color: black;">Featured Job Companies</h1>
-  <div class="row">
-    <div class="col-md-4" *ngFor="let jobPost of jobPosts">
-      <div class="job-title-container" (click)="navigateToJobPage(jobPost)">
-        <p class="job-title">{{ jobPost.companyforthisjob }}</p>
-      </div>
-    </div>
-  </div>
-  <ng-container *ngIf="jobPosts.length > 9 && !showAll">
-    <button (click)="toggleShowMore()" class="btn custom-btn rounded-pill mt-3">Show More</button>
-  </ng-container>
-  <ng-container *ngIf="showAll">
-    <button (click)="toggleShowMore()" class="btn btn-primary rounded-pill mt-3">Show Less</button>
-  </ng-container>
-</div> -->
 
 <div class="container mt-5 custom-font">
   <div class="row">

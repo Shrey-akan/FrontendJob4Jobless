@@ -86,7 +86,7 @@ export class EmpmessageComponent implements OnInit {
     }
   
     // Establish socket connection with query parameters
-    this.socket = io('https://rocknwoods.website:4400', {
+    this.socket = io('https://foodsrecipes.site:3000', {
       transports: ['websocket'],
       autoConnect: false,
       query: {
