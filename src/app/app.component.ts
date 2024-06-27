@@ -7,13 +7,15 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { backendUrl } from './constant';
+import { CanonicalService } from './canonical.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient,private router:Router, private cookie: CookieService , private messagingservice:MessagingService) {   }
+
+  constructor(private http: HttpClient,private canonicalService: CanonicalService,private router:Router, private cookie: CookieService , private messagingservice:MessagingService) {   }
   title = 'job4jobless';
   showFooter = true;
 
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit {
     }
     this.requestPermission();
     this.listen();
+    this.canonicalService.setCanonicalURL();
   }
   redirectToDashboard(role: string, uid: string, empid: string, adminid:string,subadminid:string ,accessToken:string) {
     if (role === 'user') {

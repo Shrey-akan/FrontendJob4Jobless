@@ -4,6 +4,7 @@ import { UserService } from '../auth/user.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { backendUrl } from '../constant';
+import { CanonicalService } from '../canonical.service';
 
 @Component({
   selector: 'app-home',
@@ -14,17 +15,22 @@ export class HomeComponent implements OnInit {
   jobPosts: any[] = [];
   showAll: boolean = false;
 
-  // showAll: boolean = false;
   contactForm!: FormGroup;
-  constructor(private fb: FormBuilder, private b1: UserService, private router: Router, private http: HttpClient) { }
-
+  
+  constructor(
+    private fb: FormBuilder, 
+    private b1: UserService, 
+    private canonicalService: CanonicalService, 
+    private router: Router, 
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
     // Set the carousel to auto-play every 5 seconds
     this.runCarousel();
     this.fetchJobTitles();
+    this.canonicalService.setCanonicalURL();
   }
-
 
   fetchJobTitles() {
     this.http.get<any>(`${backendUrl}fetchjobpost`).subscribe(
@@ -40,10 +46,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
-
-
   runCarousel() {
-    const interval = 100; // 5 seconds interval (adjust as needed)
+    const interval = 5000; // 5 seconds interval (adjust as needed)
 
     setInterval(() => {
       document.querySelector('#carouselExample')?.classList.add('next');
